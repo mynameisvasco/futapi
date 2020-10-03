@@ -2,7 +2,7 @@
 
 namespace App\Application\Authentication\Listeners;
 
-use App\Application\Resources\Events\RegisterEvent;
+use App\Application\Authentication\Events\RegisterEvent;
 use App\Application\Authentication\Notifications\VerifyAccountNotification;
 use App\Domain\Entities\ConfirmationPin;
 use Carbon\Carbon;
