@@ -3,6 +3,7 @@
 namespace App\Application\Resources\Providers;
 
 use App\Api\Http\Controllers\ResourcesController;
+use App\Application\Common\Middleware\LimitRequests;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Route;
 
@@ -12,7 +13,7 @@ class ResourcesRoutesServiceProvider extends RouteServiceProvider
     {
         $this->routes(function () {
             Route::prefix('api/resources')
-                ->middleware(["api", "auth:api"])
+                ->middleware(["api", "auth:api", LimitRequests::class])
                 ->namespace($this->namespace)
                 ->group(function () {
                     Route::get("cards", [ResourcesController::class, "cards"]);
