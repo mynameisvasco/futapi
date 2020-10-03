@@ -19,10 +19,12 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('role')->default("none");
             $table->ipAddress("created_ip");
             $table->ipAddress("last_login_ip");
             $table->timestamp("last_login_at", 0)->useCurrent();
+            $table->integer("num_requests_today")->default(0);
+            $table->integer("telegram_user_id")->default(0);
+            $table->foreignId("role_id")->constrained();
             $table->rememberToken();
             $table->timestamps();
         });

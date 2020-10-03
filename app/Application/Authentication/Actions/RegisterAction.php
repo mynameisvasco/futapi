@@ -2,7 +2,7 @@
 
 namespace App\Application\Authentication\Actions;
 
-use App\Application\Authentication\Events\RegisterEvent;
+use App\Application\Resources\Events\RegisterEvent;
 use App\Application\Common\Models\AbstractAction;
 use App\Domain\Entities\User;
 use App\Application\Authentication\Notifications\VerifyAccountNotification;

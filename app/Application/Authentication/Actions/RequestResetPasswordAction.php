@@ -2,7 +2,7 @@
 
 namespace App\Application\Authentication\Actions;
 
-use App\Application\Authentication\Events\RequestResetPasswordEvent;
+use App\Application\Resources\Events\RequestResetPasswordEvent;
 use App\Application\Common\Models\AbstractAction;
 use App\Domain\Entities\User;
 use Illuminate\Http\Request;

@@ -2,7 +2,7 @@
 
 namespace App\Application\Authentication\Listeners;
 
-use App\Application\Authentication\Events\LoginEvent;
+use App\Application\Resources\Events\LoginEvent;
 
 class NewSessionListener
 {

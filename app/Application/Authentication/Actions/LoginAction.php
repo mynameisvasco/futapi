@@ -2,7 +2,6 @@
 
 namespace App\Application\Authentication\Actions;
 
-use App\Application\Authentication\Consts\ScopeConsts;
 use App\Application\Authentication\Events\LoginEvent;
 use App\Application\Common\Models\AbstractAction;
 use App\Domain\Entities\User;
@@ -17,25 +16,29 @@ class LoginAction extends AbstractAction
     {
         $this->validate($request);
         $credentials = $request->only(["email", "password"]);
-        $areCredentialsValid = Auth::attempt($credentials);
 
-        if ($areCredentialsValid) {
-            $user = User::where('email', $credentials["email"])->first();
-            $tokenResult = $user->createToken(env("APP_NAME"), ScopeConsts::roleScopes[$user->role]);
-            $user->last_login_ip = $request->getClientIp();
-            $user->last_login_at = Carbon::now();
-            $user->save();
-            Event::dispatch(new LoginEvent($user));
-            return response()->json([
-                'access_token' => $tokenResult->accessToken,
-                'token_type' => 'Bearer',
-                'expires_at' => Carbon::parse(
-                    $tokenResult->token->expires_at
-                )->toDateTimeString()
-            ]);
+        if (!Auth::attempt($credentials)) {
+            abort(401, "Provided credentials do not match any record");
         }
 
-        return response()->json(["message" => "Provided credentials do not match any record"], 403);
+        $user = User::where('email', $credentials["email"])->first();
+        $scopes = $user->role()->first()["scopes"];
+
+        $tokenResult = $user->createToken(env("APP_NAME"), $scopes);
+
+        $user->last_login_ip = $request->getClientIp();
+        $user->last_login_at = Carbon::now();
+        $user->save();
+
+        Event::dispatch(new LoginEvent($user));
+
+        return response()->json([
+            'access_token' => $tokenResult->accessToken,
+            'token_type' => 'Bearer',
+            'expires_at' => Carbon::parse(
+                $tokenResult->token->expires_at
+            )->toDateTimeString()
+        ]);
     }
 
     protected function validate(Request $request)

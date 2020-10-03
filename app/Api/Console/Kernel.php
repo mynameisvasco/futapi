@@ -24,7 +24,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->command('parse:latestCards')
+            ->everyThreeHours();
+
+        $schedule->command('users:resetAllTodayRequests')
+            ->dailyAt("0:00");
     }
 
     /**
@@ -35,7 +39,6 @@ class Kernel extends ConsoleKernel
     protected function commands()
     {
         $this->load(__DIR__.'/Commands');
-
-        require base_path('routes/console.php');
+        $this->load(__DIR__.'/Tasks');
     }
 }

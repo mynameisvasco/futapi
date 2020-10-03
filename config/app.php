@@ -170,6 +170,7 @@ return [
          * Application Service Providers...
          */
         App\Application\Common\Providers\AppServiceProvider::class,
+
     ],
 
     /*

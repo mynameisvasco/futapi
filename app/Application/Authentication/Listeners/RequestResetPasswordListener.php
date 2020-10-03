@@ -2,7 +2,7 @@
 
 namespace App\Application\Authentication\Listeners;
 
-use App\Application\Authentication\Events\RequestResetPasswordEvent;
+use App\Application\Resources\Events\RequestResetPasswordEvent;
 use App\Application\Authentication\Notifications\RequestResetPasswordNotification;
 use App\Domain\Entities\ConfirmationPin;
 use Carbon\Carbon;

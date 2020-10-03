@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Application\Authentication\Events;
+namespace App\Application\Resources\Events;
 
-use App\Domain\Entities\User;
+use App\Domain\Entities\Card;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class LoginEvent
+class StoredCardEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public User $user;
+    public Card $card;
 
-    public function __construct(User $user)
+    public function __construct(Card $card)
     {
-        $this->user = $user;
+        $this->card = $card;
     }
 }

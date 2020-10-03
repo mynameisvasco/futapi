@@ -16,7 +16,6 @@ use Illuminate\Notifications\Notifiable;
  * @property string $email
  * @property \Illuminate\Support\Carbon|null $email_verified_at
  * @property string $password
- * @property string $role
  * @property string $created_ip
  * @property string $last_login_ip
  * @property string $last_login_at
@@ -47,6 +46,12 @@ use Illuminate\Notifications\Notifiable;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereRole($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property int $num_requests_today
+ * @property int $telegram_user_id
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereNumRequestsToday($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereTelegramUserId($value)
+ * @property int $role_id
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereRoleId($value)
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -56,7 +61,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
-        'role',
         'last_login_at',
         "last_login_ip",
         "created_ip",
@@ -65,7 +69,6 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $hidden = [
         'password',
         'remember_token',
-        'role',
     ];
 
     protected $casts = [
@@ -75,5 +78,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function confirmationPins()
     {
         return $this->hasMany(ConfirmationPin::class);
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
     }
 }
