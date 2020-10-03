@@ -2,16 +2,12 @@
 
 namespace App\Application\Authentication\Actions;
 
-use App\Application\Resources\Events\RegisterEvent;
+use App\Application\Authentication\Events\RegisterEvent;
 use App\Application\Common\Models\AbstractAction;
 use App\Domain\Entities\User;
-use App\Application\Authentication\Notifications\VerifyAccountNotification;
-use App\Domain\Entities\ConfirmationPin;
-use Carbon\Carbon;
 use Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Str;
 
 class RegisterAction extends AbstractAction
 {
