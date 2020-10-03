@@ -2,9 +2,9 @@
 
 namespace App\Application\Authentication\Providers;
 
-use App\Application\Resources\Events\LoginEvent;
-use App\Application\Resources\Events\RegisterEvent;
-use App\Application\Resources\Events\RequestResetPasswordEvent;
+use App\Application\Authentication\Events\LoginEvent;
+use App\Application\Authentication\Events\RegisterEvent;
+use App\Application\Authentication\Events\RequestResetPasswordEvent;
 use App\Application\Authentication\Listeners\NewSessionListener;
 use App\Application\Authentication\Listeners\RequestResetPasswordListener;
 use App\Application\Authentication\Listeners\VerifyAccountListener;
