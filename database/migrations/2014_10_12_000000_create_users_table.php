@@ -24,7 +24,6 @@ class CreateUsersTable extends Migration
             $table->timestamp("last_login_at", 0)->useCurrent();
             $table->integer("num_requests_today")->default(0);
             $table->integer("telegram_user_id")->default(0);
-            $table->integer("role_id")->index()->default(1);
             $table->rememberToken();
             $table->timestamps();
         });
