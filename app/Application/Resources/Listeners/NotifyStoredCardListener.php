@@ -10,9 +10,7 @@ class NotifyStoredCardListener
 {
     public function handle(StoredCardEvent $event)
     {
-        $admins = User::whereHas(['role' => function ($r) {
-            $r->where("name", "admin");
-        }])->get();
+        $admins = User::with('role')->where('role.name', 'admin');
         foreach ($admins as $admin) {
             $admin->notify(new StoredCardNotification($event->card));
         }
