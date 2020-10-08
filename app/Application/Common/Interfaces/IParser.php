@@ -3,6 +3,7 @@
 namespace App\Application\Common\Interfaces;
 
 use App\Domain\Entities\Card;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
 interface IParser
@@ -17,6 +18,6 @@ interface IParser
 
     public function parseLeagues(): Collection;
 
-    public function parseLatestCards(int $fromIndex, int $toIndex): Collection;
+    public function parseLatestCards(Carbon $latestAddedDate): Collection;
 }
 

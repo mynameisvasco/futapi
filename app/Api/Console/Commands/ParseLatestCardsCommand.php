@@ -4,6 +4,7 @@ namespace App\Api\Console\Commands;
 
 use App\Application\Common\Interfaces\IParser;
 use App\Application\Resources\Actions\StoreCardAction;
+use App\Domain\Entities\Card;
 use Illuminate\Console\Command;
 use Illuminate\Http\Request;
 
@@ -24,23 +25,14 @@ class ParseLatestCardsCommand extends Command
     public function handle()
     {
         $this->info("⌛️ Parsing latest cards...");
-        $fromIndex = 0;
-        $toIndex = 2;
-        $alreadyOnDatabase = false;
-        while (!$alreadyOnDatabase) {
-            $cards = $this->parser->parseLatestCards($fromIndex, $toIndex);
-            $this->info("➡️  A total of {$cards->count()} new cards were parsed");
-            foreach ($cards as $card) {
-                $request = new Request();
-                $request->setMethod("POST");
-                $request->request->add($card->jsonSerialize());
-                $response = (new StoreCardAction())($request);
-                if ($response->getData(true)["isAlreadyOnDatabase"]) {
-                    $alreadyOnDatabase = true;
-                }
-            }
-            $fromIndex += $toIndex + 1;
-            $toIndex += 3;
+        $latestAddedDate = Card::latest()->first()->created_at;
+        $cards = $this->parser->parseLatestCards($latestAddedDate);
+        $this->info("➡️  A total of {$cards->count()} new cards were parsed");
+        foreach ($cards as $card) {
+            $request = new Request();
+            $request->setMethod("POST");
+            $request->request->add($card->jsonSerialize());
+            (new StoreCardAction())($request);
         }
         return 0;
     }

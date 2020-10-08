@@ -13,7 +13,6 @@ class StoreCardAction extends AbstractAction
     public function __invoke(Request $request)
     {
         $this->validate($request);
-        $isAlreadyOnDatabase = Card::where("resource_id", $request["resource_id"])->count() > 0;
         $card = Card::updateOrCreate(["resource_id" => $request["resource_id"]], $request->all());
         foreach ($request["attributes"] as $attribute) {
             $card->attributes()->updateOrCreate([
@@ -22,10 +21,7 @@ class StoreCardAction extends AbstractAction
             ], $attribute);
         }
         Event::dispatch(new StoredCardEvent($card));
-        return response()->json([
-            "message" => "{$card->display_name} card's ({$card->id}) stored",
-            "isAlreadyOnDatabase" => $isAlreadyOnDatabase
-        ]);
+        return response()->json(["message" => "{$card->display_name} card's ({$card->id}) stored"]);
     }
 
     protected function validate(Request $request)

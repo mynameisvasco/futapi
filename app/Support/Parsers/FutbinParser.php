@@ -8,6 +8,7 @@ use App\Domain\Entities\CardAttribute;
 use App\Domain\Entities\Club;
 use App\Domain\Entities\League;
 use App\Domain\Entities\Nation;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use PHPHtmlParser\Dom;
@@ -107,21 +108,20 @@ class FutbinParser implements IParser
         return $cards;
     }
 
-    public function parseLatestCards(int $fromIndex, int $toIndex): Collection
+    public function parseLatestCards(Carbon $latestAddedDate): Collection
     {
         $cards = new Collection();
         $dom = new Dom();
         $dom->loadFromUrl(FutbinParser::baseUrl."/latest");
         $nodes = $dom->find("[class*=player_tr]");
-        $i = $fromIndex;
         foreach ($nodes as $node) {
-            if ($i > $toIndex) {
+            $addedOn = Carbon::parse($node->find("td")[9]->text);
+            if ($latestAddedDate->isAfter($addedOn) or $latestAddedDate->isSameDay($addedOn)) {
                 break;
             }
             $node = $node->find(".table-row-text");
             $card = $this->parseCard($node->find("a")->getAttribute("href"));
             $cards->add($card);
-            $i++;
         }
         return $cards;
     }
