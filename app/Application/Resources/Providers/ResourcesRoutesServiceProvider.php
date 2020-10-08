@@ -17,6 +17,7 @@ class ResourcesRoutesServiceProvider extends RouteServiceProvider
                 ->namespace($this->namespace)
                 ->group(function () {
                     Route::get("cards", [ResourcesController::class, "cards"]);
+                    Route::post("card/price", [ResourcesController::class, "cardPrice"]);
                     Route::get("nations", [ResourcesController::class, "nations"]);
                     Route::get("leagues", [ResourcesController::class, "leagues"]);
                     Route::get("clubs", [ResourcesController::class, "clubs"]);
