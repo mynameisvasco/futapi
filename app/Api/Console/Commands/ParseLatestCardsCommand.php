@@ -35,7 +35,7 @@ class ParseLatestCardsCommand extends Command
                 $request->setMethod("POST");
                 $request->request->add($card->jsonSerialize());
                 $response = (new StoreCardAction())($request);
-                if ($response->getData()["isAlreadyOnDatabase"]) {
+                if ($response->getData(true)["isAlreadyOnDatabase"]) {
                     $alreadyOnDatabase = true;
                 }
             }
