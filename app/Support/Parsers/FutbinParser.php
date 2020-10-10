@@ -115,10 +115,10 @@ class FutbinParser implements IParser
         $dom->loadFromUrl(FutbinParser::baseUrl."/latest");
         $nodes = $dom->find("[class*=player_tr]");
         foreach ($nodes as $node) {
-            $addedOn = Carbon::parse($node->find("td")[9]->text);
+            /*$addedOn = Carbon::parse($node->find("td")[9]->text);
             if ($latestAddedDate->isAfter($addedOn) or $latestAddedDate->isSameDay($addedOn)) {
                 break;
-            }
+            }*/
             $node = $node->find(".table-row-text");
             $card = $this->parseCard($node->find("a")->getAttribute("href"));
             $cards->add($card);

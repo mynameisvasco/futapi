@@ -2,6 +2,7 @@
 
 namespace App\Api\Http\Controllers;
 
+use App\Application\Resources\Actions\DrawCardAction;
 use App\Application\Resources\Actions\GetCardPriceAction;
 use App\Application\Resources\Actions\GetCardsAction;
 use App\Application\Resources\Actions\GetClubsAction;
@@ -19,6 +20,11 @@ class ResourcesController extends Controller
     public function cardPrice(Request $request)
     {
         return (new GetCardPriceAction())($request);
+    }
+
+    public function drawCard(Request $request)
+    {
+        return (new DrawCardAction())($request);
     }
 
     public function nations(Request $request)

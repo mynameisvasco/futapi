@@ -18,6 +18,7 @@ class ResourcesRoutesServiceProvider extends RouteServiceProvider
                 ->group(function () {
                     Route::get("cards", [ResourcesController::class, "cards"]);
                     Route::post("card/price", [ResourcesController::class, "cardPrice"]);
+                    Route::get("card/draw", [ResourcesController::class, "drawCard"]);
                     Route::get("nations", [ResourcesController::class, "nations"]);
                     Route::get("leagues", [ResourcesController::class, "leagues"]);
                     Route::get("clubs", [ResourcesController::class, "clubs"]);
